@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://dxqww03cpfxq"]
 
+[ext_resource type="Script" uid="uid://c13x0y1pk7b4g" path="res://scenes/characters/player/player.gd" id="1_6avc5"]
 [ext_resource type="Texture2D" uid="uid://dlkjvx40etblc" path="res://assets/game/characters/character_actions.png" id="1_t61fv"]
 [ext_resource type="Texture2D" uid="uid://biaol151dnom5" path="res://assets/game/characters/character_sprites.png" id="2_686vu"]
 [ext_resource type="Script" uid="uid://dkmkut5o34k7h" path="res://scripts/state_machine/node_state_machine.gd" id="3_hss88"]
@@ -393,6 +394,7 @@ animations = [{
 radius = 8.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1534860914]
+script = ExtResource("1_6avc5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=249425278]
 position = Vector2(0, -8)
