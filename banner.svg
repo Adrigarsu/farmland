@@ -1,261 +1,370 @@
-<svg width="900" height="180" viewBox="0 0 900 180" xmlns="http://www.w3.org/2000/svg">
+<svg width="900" height="200" viewBox="0 0 900 200" xmlns="http://www.w3.org/2000/svg">
 <defs>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap');
+    /* === ANIMATIONS === */
 
-    /* Water shimmer */
-    .water { animation: waterShimmer 3s ease-in-out infinite; }
-    @keyframes waterShimmer {
-      0%,100% { opacity:0.9; }
-      50% { opacity:1; }
-    }
+    /* Water tile shimmer */
+    .water-bg { animation: wShim 4s ease-in-out infinite; }
+    @keyframes wShim { 0%,100%{opacity:0.92} 50%{opacity:1} }
 
-    /* Cloud drift */
-    .cloud-a { animation: driftA 20s linear infinite; }
-    .cloud-b { animation: driftB 26s linear infinite; }
-    @keyframes driftA {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(-960px); }
-    }
-    @keyframes driftB {
-      0%   { transform: translateX(300px); }
-      100% { transform: translateX(-660px); }
-    }
+    /* Clouds */
+    .cloud-a { animation: cA 22s linear infinite; }
+    .cloud-b { animation: cB 30s linear infinite; }
+    @keyframes cA { from{transform:translateX(0)} to{transform:translateX(-960px)} }
+    @keyframes cB { from{transform:translateX(280px)} to{transform:translateX(-680px)} }
 
-    /* Tree sway */
-    .t1 { animation: sw1 4s ease-in-out infinite; transform-origin:82px 100px; }
-    .t2 { animation: sw2 5s ease-in-out infinite; transform-origin:152px 95px; }
-    .t3 { animation: sw1 3.5s ease-in-out infinite; transform-origin:748px 98px; }
-    .t4 { animation: sw2 4.5s ease-in-out infinite; transform-origin:818px 94px; }
-    @keyframes sw1 { 0%,100%{transform:rotate(-2deg)} 50%{transform:rotate(2deg)} }
-    @keyframes sw2 { 0%,100%{transform:rotate(1.5deg)} 50%{transform:rotate(-2deg)} }
+    /* Trees sway */
+    .tr1{animation:sw1 4.2s ease-in-out infinite;transform-origin:90px 108px}
+    .tr2{animation:sw2 5.1s ease-in-out infinite;transform-origin:168px 104px}
+    .tr3{animation:sw1 3.8s ease-in-out infinite;transform-origin:730px 106px}
+    .tr4{animation:sw2 4.8s ease-in-out infinite;transform-origin:808px 102px}
+    @keyframes sw1{0%,100%{transform:rotate(-2.5deg)}50%{transform:rotate(2.5deg)}}
+    @keyframes sw2{0%,100%{transform:rotate(2deg)}50%{transform:rotate(-2.5deg)}}
 
     /* Sunflower nod */
-    .sf1 { animation: nod 3s ease-in-out infinite; transform-origin:330px 120px; }
-    .sf2 { animation: nod 3s ease-in-out infinite 0.8s; transform-origin:390px 118px; }
-    @keyframes nod { 0%,100%{transform:rotate(-3deg)} 50%{transform:rotate(3deg)} }
+    .sf1{animation:nod 3.2s ease-in-out infinite;transform-origin:338px 126px}
+    .sf2{animation:nod 3.2s ease-in-out 0.9s infinite;transform-origin:372px 122px}
+    @keyframes nod{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
 
     /* Bush bounce */
-    .bush { animation: bushB 4s ease-in-out infinite; }
-    .bush:nth-of-type(2) { animation-delay:0.6s; }
-    @keyframes bushB { 0%,100%{transform:scaleY(1)} 50%{transform:scaleY(1.04)} }
+    .bs1{animation:bb 3.5s ease-in-out infinite;transform-origin:490px 136px}
+    .bs2{animation:bb 3.5s ease-in-out 0.7s infinite;transform-origin:520px 134px}
+    @keyframes bb{0%,100%{transform:scaleY(1) scaleX(1)}50%{transform:scaleY(1.06) scaleX(0.97)}}
 
-    /* Player idle bob */
-    .player { animation: playerBob 1.2s ease-in-out infinite; transform-origin:450px 140px; }
-    @keyframes playerBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+    /* Player bob + tool swing cycle */
+    .player{animation:pbob 1.4s ease-in-out infinite;transform-origin:450px 148px}
+    @keyframes pbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    .tool{animation:tswing 1.4s ease-in-out infinite;transform-origin:454px 144px}
+    @keyframes tswing{0%,100%{transform:rotate(-25deg)}50%{transform:rotate(15deg)}}
+
+    /* House smoke */
+    .sm1{animation:smoke 2.8s ease-out infinite;transform-origin:558px 48px}
+    .sm2{animation:smoke 2.8s ease-out 1s infinite;transform-origin:558px 48px}
+    .sm3{animation:smoke 2.8s ease-out 1.9s infinite;transform-origin:558px 48px}
+    @keyframes smoke{
+      0%  {transform:translate(0,0) scale(0.4);opacity:0.7}
+      100%{transform:translate(-10px,-38px) scale(2);opacity:0}
+    }
 
     /* Water lily drift */
-    .lily { animation: lilyDrift 5s ease-in-out infinite; transform-origin:640px 155px; }
-    @keyframes lilyDrift { 0%,100%{transform:translateX(0)} 50%{transform:translateX(5px)} }
-
-    /* Title blink-glow */
-    .title { animation: glow 4s ease-in-out infinite; }
-    @keyframes glow {
-      0%,100% { fill:#2d6e10; filter:drop-shadow(0 2px 0 rgba(255,255,255,0.8)); }
-      50%      { fill:#3a8c18; filter:drop-shadow(0 2px 4px rgba(80,200,40,0.5)); }
-    }
-    .sub { animation: subFade 5s ease-in-out infinite; }
-    @keyframes subFade { 0%,100%{opacity:0.75} 50%{opacity:1} }
+    .lily{animation:ldrift 5s ease-in-out infinite;transform-origin:648px 160px}
+    @keyframes ldrift{0%,100%{transform:translateX(0)}50%{transform:translateX(6px)}}
 
     /* Birds */
-    .birds { animation: birdFly 14s linear infinite; }
-    @keyframes birdFly {
-      0%   { transform:translate(0,0); opacity:0; }
-      4%   { opacity:1; }
-      96%  { opacity:1; }
-      100% { transform:translate(-950px,-20px); opacity:0; }
+    .birds{animation:bfly 16s linear infinite}
+    @keyframes bfly{
+      0%  {transform:translate(0,0);opacity:0}
+      4%  {opacity:1}
+      96% {opacity:1}
+      100%{transform:translate(-960px,-25px);opacity:0}
     }
+
+    /* Title glow pulse */
+    .title{animation:tglow 3.5s ease-in-out infinite}
+    @keyframes tglow{
+      0%,100%{fill:#1e5c0a;filter:drop-shadow(0 3px 0 rgba(255,255,255,0.9))}
+      50%    {fill:#2e8012;filter:drop-shadow(0 3px 6px rgba(100,220,50,0.6))}
+    }
+    .sub{animation:sfade 5s ease-in-out infinite}
+    @keyframes sfade{0%,100%{opacity:0.7}50%{opacity:1}}
+
+    /* Fence sway subtle */
+    .fence{animation:fsway 6s ease-in-out infinite;transform-origin:300px 155px}
+    @keyframes fsway{0%,100%{transform:rotate(0)}50%{transform:rotate(0.4deg)}}
   </style>
 
-  <!-- pixel grid pattern for water -->
-  <pattern id="waterPat" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+  <!-- Water tile pattern -->
+  <pattern id="wp" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
     <rect width="16" height="16" fill="#78c8b8"/>
-    <rect x="4" y="6" width="8" height="2" fill="#68b8a8" rx="1"/>
-    <rect x="2" y="10" width="6" height="2" fill="#68b8a8" rx="1"/>
-    <rect x="10" y="11" width="4" height="2" fill="#68b8a8" rx="1"/>
+    <rect x="3" y="5"  width="10" height="2" rx="1" fill="#68b4a6" opacity="0.7"/>
+    <rect x="1" y="10" width="7"  height="2" rx="1" fill="#68b4a6" opacity="0.5"/>
+    <rect x="9" y="12" width="5"  height="2" rx="1" fill="#68b4a6" opacity="0.5"/>
   </pattern>
 
-  <!-- pixel grid for grass -->
-  <pattern id="grassPat" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
+  <!-- Grass pattern -->
+  <pattern id="gp" x="0" y="0" width="8" height="8" patternUnits="userSpaceOnUse">
     <rect width="8" height="8" fill="#a8d870"/>
-    <rect x="0" y="0" width="1" height="1" fill="#98c860" opacity="0.5"/>
-    <rect x="4" y="4" width="1" height="1" fill="#98c860" opacity="0.5"/>
+    <rect x="0" y="0" width="1" height="1" fill="#90c058" opacity="0.6"/>
+    <rect x="4" y="3" width="1" height="1" fill="#90c058" opacity="0.6"/>
+    <rect x="2" y="6" width="1" height="1" fill="#b8e080" opacity="0.5"/>
+  </pattern>
+
+  <!-- Brick floor pattern (house) -->
+  <pattern id="brick" x="0" y="0" width="16" height="8" patternUnits="userSpaceOnUse">
+    <rect width="16" height="8" fill="#e8d8a8"/>
+    <rect x="0"  y="0" width="7"  height="3" rx="0" fill="#f0e0b0" opacity="0.6"/>
+    <rect x="9"  y="0" width="7"  height="3" rx="0" fill="#f0e0b0" opacity="0.6"/>
+    <rect x="4"  y="4" width="8"  height="3" rx="0" fill="#f0e0b0" opacity="0.6"/>
+    <line x1="0" y1="3" x2="16" y2="3" stroke="#d0c090" stroke-width="0.5"/>
+    <line x1="0" y1="7" x2="16" y2="7" stroke="#d0c090" stroke-width="0.5"/>
   </pattern>
 </defs>
 
-<!-- ===== WATER BACKGROUND ===== -->
-<rect width="900" height="180" fill="url(#waterPat)" class="water"/>
+<!-- ===== WATER BG ===== -->
+<rect width="900" height="200" fill="url(#wp)" class="water-bg"/>
 
-<!-- ===== GRASS ISLAND ===== -->
-<rect x="60" y="30" width="780" height="130" rx="18" fill="url(#grassPat)"/>
-<!-- island dark border (pixel style) -->
-<rect x="60" y="30" width="780" height="130" rx="18" fill="none" stroke="#88b850" stroke-width="4"/>
-<!-- dirt path top -->
-<rect x="200" y="30" width="500" height="10" fill="#d4a870" rx="3"/>
-<rect x="200" y="30" width="500" height="8" fill="#e0b880" rx="3"/>
+<!-- ===== MAIN GRASS ISLAND ===== -->
+<rect x="55" y="28" width="790" height="148" rx="20" fill="url(#gp)"/>
+<rect x="55" y="28" width="790" height="148" rx="20" fill="none" stroke="#80b040" stroke-width="3"/>
+
+<!-- ===== DIRT PATHS ===== -->
+<!-- horizontal main path -->
+<rect x="300" y="120" width="300" height="28" fill="#d4a870"/>
+<rect x="300" y="120" width="300" height="4"  fill="#e0ba88" opacity="0.7"/>
+<!-- path to house -->
+<rect x="420" y="55" width="60"  height="70" fill="#d4a870"/>
+<rect x="420" y="55" width="60"  height="4"  fill="#e0ba88" opacity="0.7"/>
 
 <!-- ===== CLOUDS ===== -->
 <g class="cloud-a">
-  <!-- cloud 1 -->
-  <rect x="120" y="8"  width="32" height="12" rx="6" fill="white" opacity="0.9"/>
-  <rect x="112" y="12" width="48" height="10" rx="5" fill="white" opacity="0.9"/>
-  <!-- cloud 2 far right -->
-  <rect x="870" y="14" width="28" height="10" rx="5" fill="white" opacity="0.8"/>
-  <rect x="864" y="17" width="40" height="8"  rx="4" fill="white" opacity="0.8"/>
+  <rect x="108" y="6"  width="36" height="13" rx="7" fill="white" opacity="0.92"/>
+  <rect x="100" y="11" width="52" height="11" rx="6" fill="white" opacity="0.92"/>
+  <rect x="880" y="12" width="30" height="11" rx="6" fill="white" opacity="0.8"/>
+  <rect x="872" y="16" width="44" height="9"  rx="5" fill="white" opacity="0.8"/>
 </g>
 <g class="cloud-b">
-  <rect x="520" y="6"  width="36" height="12" rx="6" fill="white" opacity="0.85"/>
-  <rect x="512" y="10" width="52" height="10" rx="5" fill="white" opacity="0.85"/>
+  <rect x="540" y="5"  width="40" height="13" rx="7" fill="white" opacity="0.85"/>
+  <rect x="532" y="10" width="56" height="11" rx="6" fill="white" opacity="0.85"/>
 </g>
 
-<!-- ===== LEFT TREE 1 ===== -->
-<g class="t1">
-  <!-- trunk 4px wide pixel style -->
-  <rect x="79" y="115" width="6" height="22" fill="#a06030"/>
-  <rect x="77" y="117" width="2" height="18" fill="#804820"/>
-  <!-- foliage pixel circles -->
-  <rect x="64" y="88"  width="36" height="30" rx="14" fill="#58a830"/>
-  <rect x="68" y="82"  width="28" height="20" rx="12" fill="#68c038"/>
-  <rect x="72" y="78"  width="20" height="16" rx="8"  fill="#78d040"/>
-  <!-- apple -->
-  <rect x="80" y="94"  width="4" height="4" rx="1" fill="#e04040"/>
-  <rect x="74" y="98"  width="4" height="4" rx="1" fill="#e85050"/>
-</g>
+<!-- ===== HOUSE ===== -->
+<!-- house floor -->
+<rect x="340" y="38" width="220" height="88" fill="url(#brick)" rx="2"/>
+<!-- house walls (wood frame) -->
+<rect x="335" y="34" width="230" height="92" rx="3" fill="none" stroke="#9c6840" stroke-width="8"/>
+<rect x="335" y="34" width="230" height="10" fill="#b87848" rx="2"/>
+<!-- house roof -->
+<polygon points="328,38 450,10 572,38" fill="#9c5830"/>
+<polygon points="328,38 450,10 572,38" fill="none" stroke="#7a4020" stroke-width="2"/>
+<!-- roof highlight -->
+<polygon points="360,32 450,13 540,32" fill="#b06838" opacity="0.5"/>
+<!-- chimney -->
+<rect x="548" y="12" width="14" height="26" fill="#8c4828"/>
+<rect x="546" y="10" width="18" height="5"  fill="#7a3818"/>
+<!-- smoke -->
+<circle class="sm1" cx="555" cy="10" r="5" fill="#c8c8c0" opacity="0.6"/>
+<circle class="sm2" cx="555" cy="10" r="5" fill="#d0d0c8" opacity="0.5"/>
+<circle class="sm3" cx="555" cy="10" r="5" fill="#c0c0b8" opacity="0.6"/>
+<!-- door -->
+<rect x="436" y="98" width="28" height="24" rx="2" fill="#7a4820"/>
+<rect x="436" y="98" width="28" height="5"  rx="1" fill="#9c5c28" opacity="0.5"/>
+<!-- windows -->
+<rect x="352" y="52" width="24" height="20" rx="2" fill="#b8e8f8"/>
+<rect x="352" y="52" width="24" height="20" rx="2" fill="none" stroke="#7a5030" stroke-width="2"/>
+<line x1="352" y1="62" x2="376" y2="62" stroke="#8ab8d0" stroke-width="1.5"/>
+<line x1="364" y1="52" x2="364" y2="72" stroke="#8ab8d0" stroke-width="1.5"/>
+<rect x="524" y="52" width="24" height="20" rx="2" fill="#b8e8f8"/>
+<rect x="524" y="52" width="24" height="20" rx="2" fill="none" stroke="#7a5030" stroke-width="2"/>
+<line x1="524" y1="62" x2="548" y2="62" stroke="#8ab8d0" stroke-width="1.5"/>
+<line x1="536" y1="52" x2="536" y2="72" stroke="#8ab8d0" stroke-width="1.5"/>
+<!-- flower pot at door -->
+<rect x="428" y="114" width="6" height="8" rx="1" fill="#c06830"/>
+<rect x="426" y="112" width="10" height="3" rx="1" fill="#a85820"/>
+<rect x="428" y="108" width="3" height="5" fill="#58a020"/>
+<rect x="426" y="106" width="7" height="4" rx="2" fill="#e85880"/>
 
-<!-- ===== LEFT TREE 2 ===== -->
-<g class="t2">
-  <rect x="149" y="112" width="6" height="24" fill="#a06030"/>
-  <rect x="147" y="114" width="2" height="20" fill="#804820"/>
-  <rect x="132" y="83"  width="40" height="32" rx="16" fill="#58a830"/>
-  <rect x="136" y="77"  width="32" height="22" rx="14" fill="#68c038"/>
-  <rect x="140" y="73"  width="24" height="18" rx="10" fill="#78d040"/>
-  <rect x="150" y="90"  width="4" height="4" rx="1" fill="#e04040"/>
+<!-- ===== FENCE (left side) ===== -->
+<g class="fence">
+  <rect x="228" y="130" width="5" height="26" rx="1" fill="#d4a460"/>
+  <rect x="258" y="130" width="5" height="26" rx="1" fill="#d4a460"/>
+  <rect x="288" y="130" width="5" height="26" rx="1" fill="#d4a460"/>
+  <rect x="226" y="136" width="68" height="5" rx="2" fill="#c09050"/>
+  <rect x="226" y="145" width="68" height="5" rx="2" fill="#c09050"/>
+</g>
+<!-- fence right -->
+<rect x="612" y="130" width="5" height="26" rx="1" fill="#d4a460"/>
+<rect x="642" y="130" width="5" height="26" rx="1" fill="#d4a460"/>
+<rect x="672" y="130" width="5" height="26" rx="1" fill="#d4a460"/>
+<rect x="610" y="136" width="68" height="5" rx="2" fill="#c09050"/>
+<rect x="610" y="145" width="68" height="5" rx="2" fill="#c09050"/>
+
+<!-- ===== LEFT TREES ===== -->
+<g class="tr1">
+  <rect x="87" y="120" width="6" height="26" fill="#9c5828"/>
+  <rect x="85" y="122" width="2" height="22" fill="#7a3e18"/>
+  <rect x="68" y="92"  width="44" height="34" rx="18" fill="#50a028"/>
+  <rect x="72" y="85"  width="36" height="26" rx="16" fill="#60b830"/>
+  <rect x="76" y="79"  width="28" height="22" rx="12" fill="#70cc38"/>
+  <!-- apples -->
+  <rect x="84" y="96"  width="5" height="5" rx="1" fill="#e83838"/>
+  <rect x="76" y="102" width="5" height="5" rx="1" fill="#e84848"/>
+  <rect x="92" y="103" width="4" height="4" rx="1" fill="#d83030"/>
+</g>
+<g class="tr2">
+  <rect x="165" y="116" width="6" height="28" fill="#9c5828"/>
+  <rect x="163" y="118" width="2" height="24" fill="#7a3e18"/>
+  <rect x="146" y="87"  width="46" height="36" rx="20" fill="#50a028"/>
+  <rect x="150" y="80"  width="38" height="28" rx="18" fill="#60b830"/>
+  <rect x="154" y="74"  width="30" height="24" rx="14" fill="#70cc38"/>
+  <rect x="162" y="92"  width="5" height="5" rx="1" fill="#e83838"/>
+  <rect x="172" y="99"  width="4" height="4" rx="1" fill="#e84848"/>
 </g>
 
 <!-- ===== SUNFLOWERS ===== -->
 <g class="sf1">
-  <!-- stem -->
-  <rect x="328" y="110" width="4" height="38" fill="#5a9820"/>
-  <!-- leaf -->
-  <rect x="320" y="118" width="10" height="6" rx="3" fill="#68b028" transform="rotate(-20,325,121)"/>
+  <rect x="235" y="118" width="4" height="40" fill="#58a018"/>
+  <rect x="226" y="126" width="12" height="7" rx="3" fill="#70b828" transform="rotate(-25,232,130)"/>
   <!-- petals -->
-  <rect x="320" y="98"  width="20" height="6" rx="3" fill="#f8c820"/>
-  <rect x="320" y="106" width="20" height="6" rx="3" fill="#f8c820" transform="rotate(45,330,109)"/>
-  <rect x="320" y="106" width="20" height="6" rx="3" fill="#f8c820" transform="rotate(90,330,109)"/>
-  <rect x="320" y="106" width="20" height="6" rx="3" fill="#f8c820" transform="rotate(135,330,109)"/>
-  <!-- center -->
-  <rect x="322" y="100" width="16" height="16" rx="4" fill="#804010"/>
-  <rect x="324" y="102" width="12" height="12" rx="3" fill="#a05018"/>
+  <rect x="228" y="104" width="22" height="7" rx="3" fill="#f8c818"/>
+  <rect x="228" y="112" width="22" height="7" rx="3" fill="#f8c818" transform="rotate(45,239,116)"/>
+  <rect x="228" y="112" width="22" height="7" rx="3" fill="#f8c818" transform="rotate(90,239,116)"/>
+  <rect x="228" y="112" width="22" height="7" rx="3" fill="#f8c818" transform="rotate(135,239,116)"/>
+  <rect x="231" y="107" width="16" height="16" rx="4" fill="#803810"/>
+  <rect x="233" y="109" width="12" height="12" rx="3" fill="#a04818"/>
 </g>
-
 <g class="sf2">
-  <rect x="388" y="108" width="4" height="40" fill="#5a9820"/>
-  <rect x="380" y="116" width="10" height="6" rx="3" fill="#68b028" transform="rotate(-15,385,119)"/>
-  <rect x="380" y="96"  width="20" height="6" rx="3" fill="#f8c820"/>
-  <rect x="380" y="104" width="20" height="6" rx="3" fill="#f8c820" transform="rotate(45,390,107)"/>
-  <rect x="380" y="104" width="20" height="6" rx="3" fill="#f8c820" transform="rotate(90,390,107)"/>
-  <rect x="380" y="104" width="20" height="6" rx="3" fill="#f8c820" transform="rotate(135,390,107)"/>
-  <rect x="382" y="98"  width="16" height="16" rx="4" fill="#804010"/>
-  <rect x="384" y="100" width="12" height="12" rx="3" fill="#a05018"/>
+  <rect x="268" y="116" width="4" height="42" fill="#58a018"/>
+  <rect x="260" y="124" width="12" height="7" rx="3" fill="#70b828" transform="rotate(-20,266,128)"/>
+  <rect x="261" y="101" width="22" height="7" rx="3" fill="#f8c818"/>
+  <rect x="261" y="109" width="22" height="7" rx="3" fill="#f8c818" transform="rotate(45,272,113)"/>
+  <rect x="261" y="109" width="22" height="7" rx="3" fill="#f8c818" transform="rotate(90,272,113)"/>
+  <rect x="261" y="109" width="22" height="7" rx="3" fill="#f8c818" transform="rotate(135,272,113)"/>
+  <rect x="264" y="104" width="16" height="16" rx="4" fill="#803810"/>
+  <rect x="266" y="106" width="12" height="12" rx="3" fill="#a04818"/>
 </g>
 
-<!-- ===== BUSHES CENTER ===== -->
-<g class="bush" style="transform-origin:490px 130px">
-  <rect x="468" y="118" width="22" height="18" rx="8"  fill="#58a830"/>
-  <rect x="472" y="113" width="18" height="14" rx="7"  fill="#68c038"/>
-  <rect x="476" y="115" width="6"  height="4"  rx="1"  fill="#e05878"/><!-- berry -->
+<!-- ===== CROPS (tilled rows) ===== -->
+<!-- tilled dirt row -->
+<rect x="320" y="148" width="12" height="16" rx="1" fill="#c89050" opacity="0.7"/>
+<rect x="333" y="148" width="12" height="16" rx="1" fill="#c89050" opacity="0.7"/>
+<rect x="346" y="148" width="12" height="16" rx="1" fill="#c89050" opacity="0.7"/>
+<!-- small sprouts -->
+<rect x="324" y="144" width="4" height="8" fill="#58b020"/>
+<rect x="322" y="142" width="8" height="4" rx="2" fill="#70cc28"/>
+<rect x="337" y="143" width="4" height="9" fill="#58b020"/>
+<rect x="335" y="141" width="8" height="4" rx="2" fill="#70cc28"/>
+<rect x="350" y="145" width="4" height="7" fill="#58b020"/>
+<rect x="348" y="143" width="8" height="4" rx="2" fill="#70cc28"/>
+
+<!-- ===== BUSHES (berry) ===== -->
+<g class="bs1">
+  <rect x="472" y="128" width="26" height="22" rx="10" fill="#50a828"/>
+  <rect x="476" y="122" width="22" height="18" rx="9"  fill="#60c030"/>
+  <rect x="480" y="124" width="7"  height="5"  rx="1"  fill="#e05070"/>
+  <rect x="472" y="130" width="6"  height="5"  rx="1"  fill="#c84060"/>
 </g>
-<g class="bush" style="transform-origin:522px 128px;animation-delay:0.5s;animation:bushB 4s ease-in-out 0.5s infinite">
-  <rect x="500" y="116" width="24" height="18" rx="9"  fill="#58a830"/>
-  <rect x="504" y="111" width="20" height="14" rx="8"  fill="#68c038"/>
-  <rect x="512" y="113" width="6"  height="4"  rx="1"  fill="#e05878"/>
-  <rect x="504" y="117" width="6"  height="4"  rx="1"  fill="#d84868"/>
+<g class="bs2">
+  <rect x="502" y="126" width="28" height="22" rx="11" fill="#50a828"/>
+  <rect x="506" y="120" width="24" height="18" rx="10" fill="#60c030"/>
+  <rect x="514" y="122" width="7"  height="5"  rx="1"  fill="#e05070"/>
+  <rect x="506" y="128" width="6"  height="5"  rx="1"  fill="#c84060"/>
+  <rect x="520" y="126" width="5"  height="4"  rx="1"  fill="#d04868"/>
 </g>
 
 <!-- ===== WATER POND ===== -->
-<rect x="600" y="115" width="90" height="50" rx="20" fill="#78c8b8"/>
-<rect x="614" y="122" width="62" height="36" rx="16" fill="#88d8c8"/>
+<rect x="610" y="125" width="96" height="46" rx="22" fill="#78c8b8"/>
+<rect x="622" y="132" width="72" height="32" rx="16" fill="#88d8c8"/>
+<!-- ripple lines -->
+<ellipse cx="658" cy="148" rx="18" ry="5" fill="none" stroke="#68b8a8" stroke-width="1.5" opacity="0.6"/>
+<ellipse cx="658" cy="148" rx="10" ry="3" fill="none" stroke="#68b8a8" stroke-width="1" opacity="0.4"/>
 <!-- lily -->
 <g class="lily">
-  <ellipse cx="640" cy="148" rx="10" ry="6" fill="#68b840"/>
-  <rect x="638" y="143" width="4" height="4" rx="2" fill="#f868a8"/>
+  <ellipse cx="648" cy="157" rx="11" ry="7" fill="#60b038"/>
+  <ellipse cx="648" cy="155" rx="5"  ry="4" fill="#f868a8"/>
+  <!-- leaf notch -->
+  <path d="M648,163 L648,150" stroke="#50a028" stroke-width="1" opacity="0.5"/>
 </g>
+<!-- second lily -->
+<ellipse cx="672" cy="138" rx="8" ry="5" fill="#68b840" opacity="0.8"/>
 
 <!-- ===== RIGHT TREES ===== -->
-<g class="t3">
-  <rect x="745" y="113" width="6" height="24" fill="#a06030"/>
-  <rect x="743" y="115" width="2" height="20" fill="#804820"/>
-  <rect x="728" y="82"  width="40" height="32" rx="16" fill="#58a830"/>
-  <rect x="732" y="76"  width="32" height="22" rx="14" fill="#68c038"/>
-  <rect x="736" y="72"  width="24" height="18" rx="10" fill="#78d040"/>
-  <rect x="744" y="88"  width="4" height="4" rx="1" fill="#e04040"/>
-  <rect x="738" y="92"  width="4" height="4" rx="1" fill="#e85050"/>
+<g class="tr3">
+  <rect x="727" y="118" width="6" height="28" fill="#9c5828"/>
+  <rect x="725" y="120" width="2" height="24" fill="#7a3e18"/>
+  <rect x="708" y="88"  width="46" height="36" rx="20" fill="#50a028"/>
+  <rect x="712" y="81"  width="38" height="28" rx="18" fill="#60b830"/>
+  <rect x="716" y="75"  width="30" height="24" rx="14" fill="#70cc38"/>
+  <rect x="724" y="94"  width="5" height="5" rx="1" fill="#e83838"/>
+  <rect x="716" y="100" width="4" height="4" rx="1" fill="#e84848"/>
 </g>
-<g class="t4">
-  <rect x="815" y="110" width="6" height="26" fill="#a06030"/>
-  <rect x="813" y="112" width="2" height="22" fill="#804820"/>
-  <rect x="796" y="78"  width="44" height="34" rx="18" fill="#58a830"/>
-  <rect x="800" y="72"  width="36" height="24" rx="16" fill="#68c038"/>
-  <rect x="804" y="68"  width="28" height="20" rx="12" fill="#78d040"/>
-  <rect x="812" y="84"  width="4" height="4" rx="1" fill="#e04040"/>
+<g class="tr4">
+  <rect x="805" y="114" width="6" height="30" fill="#9c5828"/>
+  <rect x="803" y="116" width="2" height="26" fill="#7a3e18"/>
+  <rect x="784" y="83"  width="50" height="38" rx="22" fill="#50a028"/>
+  <rect x="788" y="76"  width="42" height="30" rx="20" fill="#60b830"/>
+  <rect x="792" y="70"  width="34" height="26" rx="16" fill="#70cc38"/>
+  <rect x="800" y="88"  width="5" height="5" rx="1" fill="#e83838"/>
+  <rect x="810" y="95"  width="4" height="4" rx="1" fill="#e84848"/>
+  <rect x="792" y="95"  width="5" height="5" rx="1" fill="#d83030"/>
 </g>
 
-<!-- ===== PLAYER (pixel cat style like screenshot) ===== -->
+<!-- ===== PLAYER with watering can ===== -->
 <g class="player">
   <!-- shadow -->
-  <ellipse cx="450" cy="152" rx="10" ry="3" fill="#88b850" opacity="0.4"/>
+  <ellipse cx="450" cy="162" rx="11" ry="3" fill="#80a838" opacity="0.35"/>
   <!-- body -->
-  <rect x="440" y="128" width="20" height="20" rx="2" fill="#f0f0f0"/>
+  <rect x="440" y="140" width="20" height="20" rx="2" fill="#f0f0f0"/>
+  <!-- shirt (blue like spritesheet) -->
+  <rect x="440" y="140" width="20" height="10" rx="1" fill="#6890e8"/>
+  <!-- legs -->
+  <rect x="441" y="158" width="7"  height="6" rx="1" fill="#4870c8"/>
+  <rect x="452" y="158" width="7"  height="6" rx="1" fill="#4870c8"/>
   <!-- head -->
-  <rect x="440" y="114" width="20" height="16" rx="3" fill="#f0f0f0"/>
-  <!-- ears -->
-  <rect x="438" y="110" width="6" height="6" rx="1" fill="#f0f0f0"/>
-  <rect x="456" y="110" width="6" height="6" rx="1" fill="#f0f0f0"/>
+  <rect x="440" y="126" width="20" height="16" rx="3" fill="#f0f0f0"/>
+  <!-- ears (cat) -->
+  <rect x="438" y="122" width="6" height="6" rx="1" fill="#f0f0f0"/>
+  <rect x="456" y="122" width="6" height="6" rx="1" fill="#f0f0f0"/>
+  <!-- inner ear -->
+  <rect x="440" y="123" width="3" height="3" rx="1" fill="#f8c8c8"/>
+  <rect x="457" y="123" width="3" height="3" rx="1" fill="#f8c8c8"/>
   <!-- eyes -->
-  <rect x="443" y="118" width="3" height="3" fill="#202020"/>
-  <rect x="454" y="118" width="3" height="3" fill="#202020"/>
-  <!-- nose/mouth -->
-  <rect x="449" y="122" width="2" height="2" fill="#e09090"/>
-  <!-- shirt color -->
-  <rect x="440" y="128" width="20" height="8" rx="1" fill="#6890e8"/>
+  <rect x="443" y="130" width="3" height="3" fill="#202820"/>
+  <rect x="454" y="130" width="3" height="3" fill="#202820"/>
+  <!-- nose -->
+  <rect x="449" y="134" width="2" height="2" fill="#e09890"/>
+</g>
+<!-- watering can (tool) -->
+<g class="tool">
+  <rect x="455" y="138" width="18" height="11" rx="2" fill="#68a8d8"/>
+  <rect x="473" y="141" width="8"  height="2"  rx="1" fill="#5898c8"/>
+  <rect x="479" y="140" width="2"  height="5"  rx="1" fill="#5898c8"/>
+  <!-- water drops -->
+  <rect x="476" y="147" width="2" height="3" rx="1" fill="#88c8f0" opacity="0.8"/>
+  <rect x="480" y="149" width="2" height="3" rx="1" fill="#88c8f0" opacity="0.7"/>
+  <rect x="484" y="147" width="2" height="3" rx="1" fill="#88c8f0" opacity="0.6"/>
 </g>
 
 <!-- ===== BIRDS ===== -->
 <g class="birds">
-  <path d="M840 22 Q845 17 850 22" stroke="#2d6e10" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <path d="M857 16 Q863 11 869 16" stroke="#2d6e10" stroke-width="2" fill="none" stroke-linecap="round"/>
-  <path d="M848 10 Q854 5 860 10" stroke="#2d6e10" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M855 22 Q861 16 867 22" stroke="#1e5c0a" stroke-width="2"   fill="none" stroke-linecap="round"/>
+  <path d="M872 15 Q879 9  886 15" stroke="#1e5c0a" stroke-width="2"   fill="none" stroke-linecap="round"/>
+  <path d="M863 8  Q870 3  877 8"  stroke="#1e5c0a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
 </g>
 
+<!-- ===== DECORATIVE PIXEL GRASS BLADES ===== -->
+<rect x="65"  y="162" width="4" height="10" rx="1" fill="#70b030"/>
+<rect x="73"  y="159" width="4" height="13" rx="1" fill="#80c038"/>
+<rect x="81"  y="164" width="3" height="8"  rx="1" fill="#70b030"/>
+<rect x="820" y="162" width="4" height="10" rx="1" fill="#70b030"/>
+<rect x="828" y="159" width="4" height="13" rx="1" fill="#80c038"/>
+<rect x="836" y="163" width="3" height="9"  rx="1" fill="#70b030"/>
+<rect x="432" y="168" width="4" height="8"  rx="1" fill="#70b030"/>
+<rect x="468" y="168" width="4" height="8"  rx="1" fill="#80c038"/>
+
 <!-- ===== TITLE ===== -->
-<text class="title" x="450" y="76"
-      text-anchor="middle"
-      font-family="'Press Start 2P', monospace, serif"
-      font-size="28"
-      letter-spacing="4"
-      fill="#2d6e10"
-      paint-order="stroke"
-      stroke="white" stroke-width="4" stroke-linejoin="round">
+<!-- shadow -->
+<text x="453" y="82"
+  text-anchor="middle"
+  font-family="'Courier New', 'Lucida Console', monospace"
+  font-size="34" font-weight="900" letter-spacing="8"
+  fill="#104008" opacity="0.25">FARMLAND</text>
+<!-- main -->
+<text class="title" x="450" y="80"
+  text-anchor="middle"
+  font-family="'Courier New', 'Lucida Console', monospace"
+  font-size="34" font-weight="900" letter-spacing="8"
+  fill="#1e5c0a"
+  paint-order="stroke" stroke="white" stroke-width="5" stroke-linejoin="round">
   FARMLAND
 </text>
-<text class="sub" x="450" y="98"
-      text-anchor="middle"
-      font-family="'Press Start 2P', monospace, serif"
-      font-size="8"
-      letter-spacing="3"
-      fill="#3a5e18"
-      paint-order="stroke"
-      stroke="white" stroke-width="3" stroke-linejoin="round">
-  A 2D FARMING GAME  ·  GODOT 4.3
+<!-- subtitle -->
+<text class="sub" x="450" y="101"
+  text-anchor="middle"
+  font-family="'Courier New', 'Lucida Console', monospace"
+  font-size="9" letter-spacing="4"
+  fill="#2a5010"
+  paint-order="stroke" stroke="white" stroke-width="3" stroke-linejoin="round">
+  2D FARMING GAME  ·  GODOT 4.3
 </text>
-
-<!-- ===== GRASS BORDER DECORATION ===== -->
-<!-- small pixel grass blades on island edge -->
-<rect x="68"  y="154" width="4" height="8" rx="1" fill="#78b840"/>
-<rect x="76"  y="152" width="4" height="10" rx="1" fill="#88c848"/>
-<rect x="820" y="154" width="4" height="8" rx="1" fill="#78b840"/>
-<rect x="828" y="152" width="4" height="10" rx="1" fill="#88c848"/>
-<rect x="430" y="156" width="4" height="6" rx="1" fill="#78b840"/>
-<rect x="468" y="156" width="4" height="6" rx="1" fill="#88c848"/>
 
 </svg>
